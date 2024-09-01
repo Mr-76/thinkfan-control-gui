@@ -14,6 +14,12 @@ jobs:
         target: [x86_64-unknown-linux-musl]
     steps:
       - uses: actions/checkout@master
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libpango1.0-dev \
+            pkg-config
       - name: Compile and release
         uses: rust-build/rust-build.action@v1.4.5
         env:
