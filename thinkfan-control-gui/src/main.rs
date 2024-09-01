@@ -14,7 +14,7 @@ use gtk::prelude::*;
 
 fn main() -> glib::ExitCode {
     let application = gtk::Application::builder()
-        .application_id("com.github.gtk-rs.examples.clock")
+        .application_id("com.github.Mr-76.thinkpadfan")
         .build();
     application.connect_activate(build_ui);
     application.run()
@@ -72,7 +72,7 @@ fn build_ui(application: &gtk::Application) {
         .orientation(Orientation::Vertical)
         .build();
 
-    window.set_title(Some("Clock Example"));
+    window.set_title(Some("THINKPAD FAN CONTROL"));
     window.set_default_size(260, 400);
 
     //let time = current_time();
