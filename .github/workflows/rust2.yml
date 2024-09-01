@@ -15,7 +15,7 @@ jobs:
         target: [x86_64-unknown-linux-musl]
     steps:
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y libgraphene-1.0-0  libgtk-4-1 pkg-config libgtk-4-dev
+        run: sudo apt-get update && sudo apt-get install -y libgraphene-1.0-0 libgtk-4-1 pkg-config libgtk-4-dev libgio2.0-cil-dev libglib2.0-dev 
       - name: Install xmllint
         run:  sudo apt-get install libsdl-pango-dev
       - uses: actions/checkout@master
