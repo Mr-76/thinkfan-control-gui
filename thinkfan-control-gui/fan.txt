@@ -1,3 +1,0 @@
-status:		enabled
-speed:		2000
-level:          5
