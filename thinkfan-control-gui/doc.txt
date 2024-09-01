@@ -1,0 +1,3 @@
+https://www.thinkwiki.org/wiki/How_to_control_fan_speed
+https://www.kernel.org/doc/Documentation/laptops/thinkpad-acpi.txt
+https://github.com/vmatare/thinkfan
