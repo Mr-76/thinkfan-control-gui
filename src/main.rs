@@ -12,7 +12,7 @@ fn main() -> glib::ExitCode {
         .build();
     application.connect_activate(build_ui);
     application.run()
-}
+} 
 
 ///Base function to build the user interface...
 ///builds the 2 buttons and the fan level label and fan speed label
@@ -53,20 +53,10 @@ fn build_ui(application: &gtk::Application) {
 
     let fan_level = Rc::new(Cell::new(0));
 
-    match get_current_fan_level() {
-        Ok(speed) => {
-            fan_level.set(speed);
-        }
-        Err(e) => {
-            eprintln!("Failed to get fan speed Level: {}", e);
-        }
-    }
 
-    button_auto.connect_clicked(clone!(
-        move |_| {
-            let _ = set_speed("auto");
-        }
-    ));
+    button_auto.connect_clicked(clone!(move |_| {
+        let _ = set_speed("auto");
+    }));
 
     //TODO: Need to handle auto string whe geting fan level....
     button_increase.connect_clicked(clone!(
@@ -179,21 +169,18 @@ fn get_current_fan_speed() -> io::Result<i32> {
 }
 
 ///Retreives the current fan speed level
-///TODO: Still need to handle when speed is set to auto.......
-fn get_current_fan_level() -> io::Result<i32> {
+fn get_current_fan_level() -> io::Result<String> {
     let mut file = File::open("/proc/acpi/ibm/fan")?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
 
-    contents
-        .lines()
-        .find(|line| line.starts_with("level:"))
-        .and_then(|line| line.split(':').nth(1))
-        .and_then(|speed| speed.trim().parse().ok())
-        .ok_or_else(|| {
-            io::Error::new(
-                io::ErrorKind::InvalidData,
-                "Failed to parse fan level speed",
-            )
-        })
+    if let Some(level_line) = contents.lines().find(|line| line.starts_with("level:")) {
+        if let Some(level) = level_line.split(':').nth(1) {
+            return Ok(level.trim().to_string());
+        }
+    }
+    Err(io::Error::new(
+        io::ErrorKind::NotFound,
+        "Fan level not found",
+    ))
 }
